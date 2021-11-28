@@ -1,8 +1,8 @@
 /* se non è mai stato creato */
 CREATE DATABASE tickettwo;
 
-CREATE TABLE tickettwo.utente_registrato (
-    UID INT NOT NULL,
+CREATE TABLE tickettwo.utente (
+    UID INT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL,
     email VARCHAR(150) NOT NULL,
     psw VARCHAR(50) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE tickettwo.gestore_eventi (
     dati_bancari VARCHAR(25) NOT NULL,
     PRIMARY KEY (UID),
     FOREIGN KEY (UID)
-        REFERENCES tickettwo.utente_registrato(UID)
+        REFERENCES tickettwo.utente(UID)
 );
 
 CREATE TABLE tickettwo.cliente (
@@ -24,7 +24,7 @@ CREATE TABLE tickettwo.cliente (
     residenza VARCHAR(25) NOT NULL,
     PRIMARY KEY (UID),
     FOREIGN KEY (UID)
-        REFERENCES tickettwo.utente_registrato(UID)
+        REFERENCES tickettwo.utente(UID)
 );
 
 CREATE TABLE tickettwo.evento (
