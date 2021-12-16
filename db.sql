@@ -1,5 +1,7 @@
 DROP DATABASE IF EXISTS tickettwo;
-CREATE DATABASE ticckettwo;
+CREATE DATABASE tickettwo;
+
+USE tickettwo;
 
 DROP TABLE IF EXISTS `utente`;
 CREATE TABLE `utente` (
@@ -9,7 +11,7 @@ CREATE TABLE `utente` (
   `psw` varchar(25) NOT NULL,
   PRIMARY KEY (`UID`)
 );
-INSERT INTO `utente` VALUES ('Ricky', 'rickyb@gmail.com', 'Speck&Grana'),
+INSERT INTO `utente` (email, nome, psw) VALUES ('Ricky', 'rickyb@gmail.com', 'Speck&Grana'),
 	('Davide', 'davimb@gmail.com', 'magnagatti01'),
  	('Elena', 'ele@outlook.it', 'crauti.wurstel'),
 	('MegaEventi', 'money@gmail.com', 'EventoUgualeSoldi'),
@@ -23,6 +25,7 @@ INSERT INTO `utente` VALUES ('Ricky', 'rickyb@gmail.com', 'Speck&Grana'),
 DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE `cliente` (
   `UID` int(11) NOT NULL,
+  `cognome` varchar(25) NOT NULL,
   `data_nascita` date NOT NULL,
   `metodo_pagamento` varchar(25) DEFAULT NULL,
   `residenza` varchar(25) NOT NULL,
@@ -64,9 +67,9 @@ CREATE TABLE `evento` (
   KEY `UID` (`UID`),
   CONSTRAINT `evento_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `gestore` (`UID`)
 );
-INSERT INTO `evento` VALUES (9, 'Ferrock Festival', "2022-07-10 21:00:00", "2022-07-16 01:00:00", 'Vicenza','Vari',	'Rock', '2,00'),
-	(9, 'Eurovision', '20221110 20:00:00', "2022-11-16 02:00:00", 'Torino', 'Maneskin', 'Vari', '168,00'),
-	(4, 'MagicTrap', "2021-12-31 23:00:00", "2022-01-01 06:00:00" 'Milano', 'Sfera', 'Trap', '200,00'),
-	(9, 'HotMusic', "2022-06-09 24:00:00", "2022-06-10 05:00:00", 'Roma',	'Vari', 'Dance', '42,00'),
-	(4, 'Vasco a Trento', "2021-12-17 19:00:00", "2021-1219 23:00:00", 'Trento',	'Vasco Rossi', 'Rock', '58,00');
+INSERT INTO `evento` (UID, nome, data_inizio, data_fine, luogo, artisti, genere, prezzo) VALUES (9, 'Ferrock Festival', "2022-07-10 21:00:00", "2022-07-16 01:00:00", 'Vicenza','Vari',	'Rock', 2.00),
+	(9, 'Eurovision', "2022-11-10 20:00:00", "2022-11-16 02:00:00", 'Torino', 'Maneskin', 'Vari', 168.00),
+	(4, 'MagicTrap', "2021-12-31 23:00:00", "2022-01-01 06:00:00" 'Milano', 'Sfera', 'Trap', 200.00),
+	(9, 'HotMusic', "2022-06-09 24:00:00", "2022-06-10 05:00:00", 'Roma',	'Vari', 'Dance', 42.00),
+	(4, 'Vasco a Trento', "2021-12-17 19:00:00", "2021-1219 23:00:00", 'Trento',	'Vasco Rossi', 'Rock', 58.00);
 
