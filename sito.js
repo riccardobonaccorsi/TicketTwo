@@ -42,6 +42,7 @@ app.post("/", (req, res) => {
     var ssn = req.session;
     change_file('login_err.html');
     var q = `SELECT UID, nome, is_gestore FROM utente WHERE email="${req.body.email}" AND psw = "${req.body.psw}";`;
+    console.log(q);
     db.query(q, (err, result) => {
         if (err) {
             res.sendFile(file_upload);
@@ -69,11 +70,11 @@ app.get("/login_err", (req, res) => {
 
 app.get('/eventi', (req, res) => {
     var ssn = req.session;
-    console.log(ssn.cliente);
+    console.log(ssn.is_gestore);
     if (ssn.is_gestore === undefined) {
         res.redirect("/");
     } else {
-        if (ssn.cliente == 1) {
+        if (ssn.is_gestore == 0) {
             change_file('lista.html');
             q = 'SELECT * FROM evento';
             console.log(q);
@@ -84,17 +85,16 @@ app.get('/eventi', (req, res) => {
                     if (err) throw err;
                     var $ = require('cheerio').load(data);
                     var out = "<table>"
-                    out = out + "<tr><th>EID</th><th>UID</th><th>Nome</th><th>data inizio</th><th>data fine</th><th>luogo</th><th>artisti</th><th>genere</th><th>prezzo</th><th></th></tr>";
                     result.forEach( (row) => {
-                        var data_i = row.d_inizio;
-                        var data_f = row.d_fine;
-                        out = out + `<tr><td>${row.EID}</td><td><a href='/API/ricercaGestore?UID=${row.UID}'>${row.UID}</a></td><td>${row.nome}</td><td>${data_i}</td><td>${data_f}</td><td>${row.luogo}</td><td>${row.artisti}</td><td>${row.genere}</td><td>${row.prezzo}</td><td><button>m</button><button>e</button></td></tr>`
+                        var data_i = row.data_inizio;
+                        var data_f = row.data_fine;
+                        out = out + `<tr><td><td>${row.nome}</td><td>${data_i}</td><td>${data_f}</td><td>${row.luogo}</td><td>${row.artisti}</td><td>${row.genere}</td><td>${row.prezzo}</td></tr>`
                     });
                     out = out + "</table>";
-                    res.send($.html().replace('<p>/lista/</p>', out));
+                    res.send($.html().replace('<p>/lol/</p>', out));
                 });
             });
-        } else if (ssn.cliente == 0) {
+        } else if (ssn.is_gestore == 1) {
             console.log("gesote");
             q = `SELECT * FROM evento WHERE UID = ${ssn.ID}`;
             console.log(q);

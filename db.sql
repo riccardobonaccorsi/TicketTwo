@@ -9,10 +9,11 @@ CREATE TABLE `utente` (
   `email` varchar(25) NOT NULL,
   `nome` varchar(25) NOT NULL,
   `psw` varchar(25) NOT NULL,
+  `path_image_profile` varchar(255),
   `is_gestore` boolean NOT NULL,
   PRIMARY KEY (`UID`)
 );
-INSERT INTO `utente` (email, nome, psw, is_gestore) VALUES ('Ricky', 'rickyb@gmail.com', 'Speck&Grana', 0),
+INSERT INTO `utente` (nome, email, psw, is_gestore) VALUES ('Ricky', 'rickyb@gmail.com', 'Speck&Grana', 0),
 	('Davide', 'davimb@gmail.com', 'magnagatti01', 0),
  	('Elena', 'ele@outlook.it', 'crauti.wurstel', 0),
 	('MegaEventi', 'money@gmail.com', 'EventoUgualeSoldi', 1),
@@ -41,7 +42,6 @@ INSERT INTO `cliente` VALUES ( 1, 'Bonaccorsi', "2000-06-10", 'Google Pay', 'Tre
 	( 7, 'Dalle Sasse', "2000-09-15", 'Carta di credito', 'Roma' ),
 	( 8, 'Dal Pra', "1989-11-30", 'Google Pay', 'Firenze' ),
 	( 10, 'Ventoso', "2001-09-28", 'Postepay', 'Trento' );
-  
 
 DROP TABLE IF EXISTS `gestore`;
 CREATE TABLE `gestore` (
