@@ -9,18 +9,19 @@ CREATE TABLE `utente` (
   `email` varchar(25) NOT NULL,
   `nome` varchar(25) NOT NULL,
   `psw` varchar(25) NOT NULL,
+  `is_gestore` boolean NOT NULL,
   PRIMARY KEY (`UID`)
 );
-INSERT INTO `utente` (email, nome, psw) VALUES ('Ricky', 'rickyb@gmail.com', 'Speck&Grana'),
-	('Davide', 'davimb@gmail.com', 'magnagatti01'),
- 	('Elena', 'ele@outlook.it', 'crauti.wurstel'),
-	('MegaEventi', 'money@gmail.com', 'EventoUgualeSoldi'),
-	('Giorgio', 'giogioacciuga@outlook.it', 'cannolino89'),
-	('Sofia', 'sofi.auro@gmail.com', 'cioccolatonutella'),
-	('Federica', 'fedelove@gmail.com', 'LoveLoveLove'),
-	('Anna', 'annina@outlook.it', 'BelloIlSole'),
-	('BestGestore', 'the.best@gmail.com', 'SoloIlTop'),
-	('Ginevra', 'gine@outlook.it', 'risottino54');
+INSERT INTO `utente` (email, nome, psw, is_gestore) VALUES ('Ricky', 'rickyb@gmail.com', 'Speck&Grana', 0),
+	('Davide', 'davimb@gmail.com', 'magnagatti01', 0),
+ 	('Elena', 'ele@outlook.it', 'crauti.wurstel', 0),
+	('MegaEventi', 'money@gmail.com', 'EventoUgualeSoldi', 1),
+	('Giorgio', 'giogioacciuga@outlook.it', 'cannolino89', 0),
+	('Sofia', 'sofi.auro@gmail.com', 'cioccolatonutella', 0),
+	('Federica', 'fedelove@gmail.com', 'LoveLoveLove', 0),
+	('Anna', 'annina@outlook.it', 'BelloIlSole', 0),
+	('BestGestore', 'the.best@gmail.com', 'SoloIlTop', 1),
+	('Ginevra', 'gine@outlook.it', 'risottino54', 0);
 
 DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE `cliente` (
@@ -69,7 +70,7 @@ CREATE TABLE `evento` (
 );
 INSERT INTO `evento` (UID, nome, data_inizio, data_fine, luogo, artisti, genere, prezzo) VALUES (9, 'Ferrock Festival', "2022-07-10 21:00:00", "2022-07-16 01:00:00", 'Vicenza','Vari',	'Rock', 2.00),
 	(9, 'Eurovision', "2022-11-10 20:00:00", "2022-11-16 02:00:00", 'Torino', 'Maneskin', 'Vari', 168.00),
-	(4, 'MagicTrap', "2021-12-31 23:00:00", "2022-01-01 06:00:00" 'Milano', 'Sfera', 'Trap', 200.00),
-	(9, 'HotMusic', "2022-06-09 24:00:00", "2022-06-10 05:00:00", 'Roma',	'Vari', 'Dance', 42.00),
-	(4, 'Vasco a Trento', "2021-12-17 19:00:00", "2021-1219 23:00:00", 'Trento',	'Vasco Rossi', 'Rock', 58.00);
+	(4, 'MagicTrap', "2021-12-31 23:00:00", "2022-01-01 06:00:00", 'Milano', 'Sfera', 'Trap', 200.00),
+	(9, 'HotMusic', "2022-06-09 00:00:00", "2022-06-10 05:00:00", 'Roma',	'Vari', 'Dance', 42.00),
+	(4, 'Vasco a Trento', "2021-12-17 19:00:00", "2021-12-19 23:00:00", 'Trento',	'Vasco Rossi', 'Rock', 58.00);
 
