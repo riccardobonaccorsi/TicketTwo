@@ -67,6 +67,7 @@ app.get("/login_err", (req, res) => {
 });
 
 // ---------------------------------------
+//              PAGINA LISTA EVENTI
 
 app.get('/eventi', (req, res) => {
     var ssn = req.session;
@@ -124,6 +125,7 @@ app.get('/eventi', (req, res) => {
 });
 
 // -----------------------------------------
+//              PAGINA INFORMAZIONI UTENTE
 
 app.get('/info_utente', (req, res) => {
     var ssn = req.session;
