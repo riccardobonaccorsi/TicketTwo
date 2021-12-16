@@ -110,13 +110,13 @@ app.get('/eventi', (req, res) => {
                     var $ = require('cheerio').load(data);
                     var out = "<table>"
                     out = out + "<tr><th>EID</th><th>UID</th><th>Nome</th><th>data inizio</th><th>data fine</th><th>luogo</th><th>artisti</th><th>genere</th><th>prezzo</th><th></th></tr>";
-                    risultati.forEach( (row) => {
+                    result.forEach( (row) => {
                         var data_i = row.data_inizio;
                         var data_f = row.data_fine;
                         out = out + `<tr><td>${row.EID}</td><td><a href='/API/ricercaGestore?UID=${row.UID}'>${row.UID}</a></td><td>${row.nome}</td><td>${data_i}</td><td>${data_f}</td><td>${row.luogo}</td><td>${row.artisti}</td><td>${row.genere}</td><td>${row.prezzo}</td><td><button>m</button><button>e</button></td></tr>`
                     });
                     out = out + "</table>";
-                    res.send($.html().replace('<p>/lol/</p>', out));
+                    res.send($.html().replace('<p>/lista/</p>', out));
                 });
             });
         }
@@ -134,7 +134,7 @@ app.get('/info_utente', (req, res) => {
         if (ssn.is_gestore == 0) {
             change_file('dati_utente.html');
             console.log("cliente");
-            q =`SELECT cliente.UID, cognome, nome, data_nascita, metodo_pagamento, residenza FROM cliente, utente WHERE utente.UID = cliente.UID AND utente.UID = ${ssn.ID} ;`;
+            q =`SELECT cliente.UID, path_image_profile, cognome, nome, data_nascita, metodo_pagamento, residenza FROM cliente, utente WHERE utente.UID = cliente.UID AND utente.UID = ${ssn.ID} ;`;
             console.log(q);
             db.query(q, (err, result) => {
                 if (err) throw err;
@@ -143,20 +143,26 @@ app.get('/info_utente', (req, res) => {
                     if (err) throw err;
                     var $ = require('cheerio').load(data);
                     var out = "<table>"
-                    out = out + "<tr><th>UID</th><th>Nome</th><th>Cognome</th><th>data_nascita</th><th>metodo_pagamento</th><th>residenza</th></tr>";
+                    out = out + "<tr><th>UID</th><th>Nome</th><th>Cognome</th><th>Data Nascita</th><th>Metodo Pagamento</th><th>Pesidenza</th></tr>";
                     var dati = result[0];
                     var birth = dati.data_nascita.getDate() + '/';
                     birth = birth + (dati.data_nascita.getMonth() + 1) + '/';
                     birth = birth + dati.data_nascita.getFullYear();
                     out = out + `<tr><td>${dati.UID}</td><td>${dati.nome}</td><td>${dati.cognome}</td><td>${birth}</td><td>${dati.metodo_pagamento}</td><td>${dati.residenza}</td></tr>`;
                     out = out + "</table>";
+                    var profile = dati.path_image_profile;
+                    if (profile == null) {
+                        profile = `<img src="${__dirname}/image/anonimo.jpeg" alt="immagine" width="500" height="333">`;
+                        console.log(profile);
+                    }
                     
-                    res.send($.html().replace('<p>/tabella/</p>', out));
+                    res.send($.html().replace('<p>/tabella/</p>', out).replace('<p>/immagine/</p>', profile));
                 });
             });
         } else if (ssn.is_gestore == 1) {
+            change_file('dati_utente.html');
             console.log("gestore");
-            q = `SELECT gestore.UID, nome, dati_bancari FROM gestore, utente WHERE utente.UID = gestore.UID AND UID = ${ssn.ID}`;
+            q = `SELECT gestore.UID, path_image_profile, nome, referente, dati_bancari FROM gestore, utente WHERE utente.UID = gestore.UID AND utente.UID = ${ssn.ID}`;
             console.log(q);
             db.query(q, (err, result) => {
                 if (err) throw err;
@@ -165,12 +171,16 @@ app.get('/info_utente', (req, res) => {
                     if (err) throw err;
                     var $ = require('cheerio').load(data);
                     var out = "<table>"
-                    out = out + "<tr><th>UID</th><th>Nome</th><th>dati_bancari</th></tr>";
+                    out = out + "<tr><th>UID</th><th>Nome</th><th>Referente</th><th>Dati Bancari</th></tr>";
                     var dati = result[0];
-                    out = out + `<tr><td>${dati.UID}</td><td>${dati.nome}</td><<td>${dati.dati_bancari}</td></tr>`;
+                    out = out + `<tr><td>${dati.UID}</td><td>${dati.nome}</td><td>${dati.referente}</td><td>${dati.dati_bancari}</td></tr>`;
                     out = out + "</table>";
-                    
-                    res.send($.html().replace('<p>/tabella/</p>', out));
+                    var profile = dati.path_image_profile;
+                    if (profile == null) {
+                        profile = `<img src="${__dirname}/image/anonimo.jpeg" alt="immagine" width="500" height="333">`;
+                        console.log(profile);
+                    }
+                    res.send($.html().replace('<p>/tabella/</p>', out).replace('<p>/immagine/</p>', profile));
                 });
             });
         }
