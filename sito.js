@@ -117,7 +117,7 @@ app.get('/eventi', (req, res) => {
                         tmp = row.data_fine.getMinutes();
                         if (tmp < 10) data_f += '0';
                         data_f += tmp + "";
-                        tabella = tabella + `<tr><div class="evento" id="${row.EID}"><img src="/static/img/evento_anonimo.jpg"><p>${row.nome}<br>${data_i}  ${data_f}<br>Luogo: ${row.luogo}<br>Artisti: ${row.artisti}<br>Genere: ${row.genere}<br>Prezzo: ${row.prezzo}</p></div></tr>`
+                        tabella = tabella + `<tr><div class="evento" id="${row.EID}"><img src="/static/SITO/a.jpg"><p>${row.nome}<br>${data_i}  ${data_f}<br>Luogo: ${row.luogo}<br>Artisti: ${row.artisti}<br>Genere: ${row.genere}<br>Prezzo: ${row.prezzo}</p></div></tr>`
                     });
                     tabella = tabella + "</table>";
 
