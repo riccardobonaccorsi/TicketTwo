@@ -19,6 +19,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
     "mysql": "^2.18.1"
   }
 }
