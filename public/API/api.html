@@ -3,68 +3,203 @@
   <title>TicketTwo</title>
 
 <style>
+
+/* intestazioni */
 h1 {
   text-align: center;
-  background-color: blue;
+  background-color: rgb(2, 2, 156);
   font-size: 50px;
-}
-h1#appendice {
-  font-size: 30px;
+  font-family: sans-serif;
+  color: white;
 }
 
+h1#appendice {
+  font-size: 30px;
+  font-family: sans-serif;
+  color: rgb(2, 2, 156);
+  background-color: rgb(185, 235, 255);
+}
+
+/*--------------------------------------------------*/
+
+
+/* bottoni in alto */
 div {
   float: right;
   width: 80%;
-  background-color: red;
-  font-size: 20px;
+  font-size: 20px; 
 }
+
 div#contenitore {
   width: 100%;
 }
 
+div#menu{
+  width: 50%;
+  margin: 0 25% 0 25%;
+}
+
+div#menu table{
+  width: 100%;
+}
+div#menu td{
+  width: 25%;
+}
+
+div#menu button{
+  width: 98%;
+  font-family: sans-serif;
+  background-color: white; 
+  color: rgb(2, 2, 156); 
+  border: 2px solid rgb(2, 2, 156);
+  font-size: 23px;
+  padding: 10px 60px;
+}
+div#menu button:hover{
+  background-color: rgb(2, 2, 156);
+  color:white;
+}
+
+/*--------------------------------------------------------------*/
+
+/* tabella centrale */
+
+div#tabella {
+  text-align: center;
+  align-items: center;
+}
+
+button#tabella{
+  font-family: sans-serif;
+  background-color: white; 
+  color: rgb(2, 2, 156); 
+  border: 2px solid rgb(2, 2, 156);
+  font-size: 15px;
+  padding: 7px 15px;
+  margin: 0 2%;
+}
+
+button#tabella:hover{
+  border: 3px solid white;
+}
+
+div#tabella table {
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  font-size: 25px;
+  border: 2px solid black;
+  border-collapse: collapse;
+}
+
+div#tabella th{
+  background-color: rgb(2, 2, 156);
+  color: white;
+  font-family: sans-serif;
+}
+
+div#tabella tr{
+  color: black;
+  font-family: sans-serif;
+  border: 2px solid black;
+  border-collapse: collapse;
+}
+
+div#tabella td{
+  height: 45px; 
+}
+
+div#tabella tr:nth-child(even){
+  background-color: rgb(185, 235, 255);
+}
+
+div#tabella tr:hover{
+  background-color: rgb(2, 2, 156);
+  color: white;
+}
+
+button#aggiungi {
+  width: 15%;
+  font-family: sans-serif;
+  background-color: white; 
+  color: rgb(2, 2, 156); 
+  border: 2px solid rgb(2, 2, 156);
+  font-size: 20px;
+  padding: 5px 20px;
+}
+
+button#aggiungi:hover{
+  background-color: rgb(185, 235, 255);
+  color:rgb(2, 2, 156);
+  border: 3px solid;
+}
+
+/*--------------------------------------------------------------*/
+
+/*  filitri */
+
 div#filtri {
   float: left;
-  width: 20%;
-  background-color: fuchsia;
+  width: 15%;
 }
 div#filtri form {
   width: 100%;
   background-color: white;
   text-align: center;
-}
-
-div#tabella {
-  background-color: gray;
-  text-align: center;
-  align-items: center;
-}
-div#tabella table {
-  background-color: fuchsia;
-  text-align: center;
-  align-items: center;
-  width: 100%;
+  font-family: sans-serif;
   font-size: 20px;
 }
+
+
+div#filtri input[type = submit] {
+
+  font-family: sans-serif;
+  background-color: white; 
+  color: rgb(2, 2, 156); 
+  border: 2px solid rgb(2, 2, 156);
+  font-size: 17px;
+  padding: 5px 30px;
+  text-align: right;
+}
+
+div#filtri input[type = submit]:hover{
+  background-color: rgb(185, 235, 255);
+  color:rgb(2, 2, 156);
+  border: 3px solid;
+}
+
+
+
+
+/*-----------------------------------------------*/
 
 </style>
 </head>
 <body>
-  <h1 id="appendice">API</h1>
+  <br>
+  <h1 id="appendice">Gestione dei dati</h1>
   <h1 id="titolo">/titolo/</h1>
   <br><br>
   <div id="contenitore">
     <div id="menu">
-      <a href="/API/mostra/utente"><button>Utente</button></a>
-      <a href="/API/mostra/cliente"><button>Cliente</button></a>
-      <a href="/API/mostra/gestore"><button>Gestore</button></a>
-      <a href="/API/mostra/evento"><button>Evento</button></a>
+      <table>
+        <tr>
+          <td><a href="/API/mostra/utente"><button>Utente</button></a></td>
+          <td><a href="/API/mostra/gestore"><button>Gestore</button></a></td>
+          <td><a href="/API/mostra/cliente"><button>Cliente</button></a></td>
+          <td><a href="/API/mostra/evento"><button>Evento</button></a></td>
+        </tr>
+    </table>
     </div>
+    <br><br><br><br>
     <div id="filtri">
-      <br><br>
+      
       /filtri/
     </div>
     <div id="tabella">
       /table/
+      <br>
+      <button id="aggiungi" action="return alert('ciao')">Aggiungi riga</button>
     </div>
   </div>
 </body>

@@ -36,16 +36,18 @@ app.get('/API/mostra/:table', (req, res, next) => {
 
       for (var getNome in req.query) {
         if (req.query.hasOwnProperty(getNome) && req.query[getNome] != "") {
-          q = q + `${getNome}='${req.query[getNome]}' AND `;
+          console.log(getNome + " -> " + req.query[getNome]);
+          q = q + `${req.params.table}.${getNome}='${req.query[getNome]}' AND `;
           t = 4;
         }
       }
+      console.log(q);
       q = q.substring(0, q.length - t);
       
       db.query(q, (err, risultati) => {
         if (err) throw err;
         if (req.params.table == "utente") {
-          var filtri = '<form action="/API/ricercaUtente" method="get">';
+          var filtri = '<form action="/API/mostra/utente" method="get">';
           filtri = filtri + '<label for="UID">UID</label><br>';
           filtri = filtri + '<input type="number" id="UID" name="UID"><br><br>';
           filtri = filtri + '<label for="nome">Nome</label><br>';
@@ -56,8 +58,8 @@ app.get('/API/mostra/:table', (req, res, next) => {
           filtri = filtri + "</form>";
     
           var out = "<table>"
-          out = out + "<tr><th>UID</th><th>NOME</th><th>E-mail</th><th></th></tr>";
-          risultati.forEach( (row) => out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td><a href="/API/modifica/utente?id=${row.UID}"><button>m</button></a><a href="/API/elimina/utente?id=${row.UID}"><button>e</button></a></tr>`);
+          out = out + "<tr><th>UID</th><th>Nome</th><th>E-mail</th><th></th></tr>";
+          risultati.forEach( (row) => out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td><a href="/API/modifica/utente?id=${row.UID}"><button id='tabella'>m</button></a><a href="/API/elimina/utente?id=${row.UID}"><button id='tabella'>e</button></a></td></tr>`);
           out = out + "</table>";
 
           var aggiungi = '<form method="post" id="f_aggiungi"  style="display:none">';
@@ -73,7 +75,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
             res.send($.html().replace(new RegExp('/titolo/', 'g'), 'Utente').replace('/filtri/', filtri).replace('/table/', out).replace('/agg/', aggiungi));
           });
         } else if (req.params.table == "cliente") {
-          var filtri = "<form method='get' action='/API/ricercaCliente'>";
+          var filtri = "<form method='get' action='/API/mostra/cliente'>";
           filtri = filtri + "<label for='UID'>UID</label><br>";
           filtri = filtri + "<input type='number' nome='UID'><br><br>";
           filtri = filtri + "<label for='nome'>Nome</label><br>";
@@ -90,8 +92,8 @@ app.get('/API/mostra/:table', (req, res, next) => {
           filtri = filtri + "</form>";
     
           var out = "<table>"
-          out = out + "<tr><th>UID</th><th>Nome</th><th>Cognome</th><th>E-mail</th><th>data di nascita</th><th>residenza</th></tr>";
-          risultati.forEach( (row) => out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.cognome}</td><td>${row.email}</td><td>${row.data_nascita}</td><td>${row.residenza}</td></td>`);
+          out = out + "<tr><th>UID</th><th>Nome</th><th>Cognome</th><th>E-mail</th><th>Data di nascita</th><th>Residenza</th><th></th></tr>";
+          risultati.forEach( (row) => out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.cognome}</td><td>${row.email}</td><td>${row.data_nascita.getDate()}/${row.data_nascita.getMonth()}/${row.data_nascita.getFullYear()}</td><td>${row.residenza}</td><td><a href="/API/modifica/cliente?id=${row.UID}"><button id='tabella'>m</button></a><a href="/API/elimina/cliente?id=${row.UID}"><button id='tabella'>e</button></a></td></tr>`);
           out = out + "</table>";
     
           var aggiungi = '<form method="post" id="f_aggiungi"  style="display:none"><table>';
@@ -119,8 +121,8 @@ app.get('/API/mostra/:table', (req, res, next) => {
           filtri = filtri + "</form>";
     
           var out = "<table>"
-          out = out + "<tr><th>UID</th><th>Nome</th><th>E-mail</th><th>dati bancari</th></tr>";
-          risultati.forEach( (row) => out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td>${row.dati_bancari}</td></td>`);
+          out = out + "<tr><th>UID</th><th>Nome</th><th>E-mail</th><th>Dati bancari</th><th></th></tr>";
+          risultati.forEach( (row) => out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td>${row.dati_bancari}</td><td><a href="/API/modifica/gestore?id=${row.UID}"><button id='tabella'>m</button></a><a href="/API/elimina/gestore?id=${row.UID}"><button id='tabella'>e</button></a></td></tr>`);
           out = out + "</table>";
 
           var aggiungi = '<form method="post" id="f_aggiungi" style="display:none"><table>';
@@ -153,16 +155,16 @@ app.get('/API/mostra/:table', (req, res, next) => {
           filtri = filtri + "<label for='genere'>Genere</label><br>";
           filtri = filtri + "<input type='text' nome='genere'><br>";
           filtri = filtri + "<label for='prezzo'>Prezzo</label><br>";
-          filtri = filtri + "<input type='text' nome='prezzo'><br>";
+          filtri = filtri + "<input type='text' nome='prezzo'><br><br>";
           filtri = filtri + "<input type='submit' value='Applica'>";
           filtri = filtri + "</form>";
 
           var out = "<table>"
-          out = out + "<tr><th>EID</th><th>UID</th><th>Nome</th><th>data inizio</th><th>data fine</th><th>luogo</th><th>artisti</th><th>genere</th><th>prezzo</th><th></th></tr>";
+          out = out + "<tr><th>EID</th><th>UID</th><th>Nome</th><th>Data inizio</th><th>Data fine</th><th>Luogo</th><th>Artisti</th><th>Genere</th><th>Prezzo</th><th></th></tr>";
           risultati.forEach( (row) => {
-            var data_i = row.d_inizio;
-            var data_f = row.d_fine;
-            out = out + `<tr><td>${row.EID}</td><td><a href='/API/ricercaGestore?UID=${row.UID}'>${row.UID}</a></td><td>${row.nome}</td><td>${data_i}</td><td>${data_f}</td><td>${row.luogo}</td><td>${row.artisti}</td><td>${row.genere}</td><td>${row.prezzo}</td><td><button>m</button><button>e</button></td></tr>`
+            var data_i = row.data_inizio.getDate() + "/" + row.data_inizio.getMonth() + "/" + row.data_inizio.getFullYear() + " " + row.data_inizio.getHours() + ":"  + row.data_inizio.getMinutes();
+            var data_f = row.data_fine.getDate() + "/" + row.data_fine.getMonth() + "/" + row.data_fine.getFullYear()  + " " + row.data_fine.getHours() + ":"  + row.data_fine.getMinutes();
+            out = out + `<tr><td>${row.EID}</td><td><a href='/API/mostra/gestore?UID=${row.UID}'>${row.UID}</a></td><td>${row.nome}</td><td>${data_i}</td><td>${data_f}</td><td>${row.luogo}</td><td>${row.artisti}</td><td>${row.genere}</td><td>${row.prezzo}</td><td><a href="/API/modifica/evento?id=${row.UID}"><button id='tabella'>m</button></a><a href="/API/elimina/evento?id=${row.UID}"><button id='tabella'>e</button></a></td></tr>`
           });
           out = out + "</table>";
    
