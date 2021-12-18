@@ -1,5 +1,5 @@
 const express = require('express');
-var session = require('express-session');
+const session = require('express-session');
 const mysql = require('mysql');
 const bodypars = require('body-parser');
 const Connection = require('mysql/lib/Connection');
@@ -21,6 +21,7 @@ app.use(session({
     saveUninitialized: false,
     resave: false
 }));
+app.use('/static', express.static('public'));
 app.use(bodypars.json());
 app.use(bodypars.urlencoded({ extended: true }));
 
@@ -30,7 +31,7 @@ var file_upload = "";
 function change_file(nome) {
   file_upload = __dirname + `/public/SITO/${nome}`;
 }
-
+console.log(__dirname);
 // ----------------------------------------------------------------------------------
 //                      PAGINA DI LOGIN
 
@@ -41,8 +42,7 @@ app.get("/", (req, res) => {
 app.post("/", (req, res) => {
     var ssn = req.session;
     change_file('login_err.html');
-    var q = `SELECT UID, nome, is_gestore FROM utente WHERE email="${req.body.email}" AND psw = "${req.body.psw}";`;
-    console.log(q);
+    var q = `SELECT UID, nome, path_image_profile AS path, is_gestore FROM utente WHERE email="${req.body.email}" AND psw = "${req.body.psw}";`;
     db.query(q, (err, result) => {
         if (err) {
             res.sendFile(file_upload);
@@ -52,12 +52,13 @@ app.post("/", (req, res) => {
             change_file('lista.html');
             ssn.ID = row.UID;
             ssn.nome = row.nome;
+            ssn.path_image = row.path;
             ssn.is_gestore = row.is_gestore;
         });
         if (file_upload == __dirname + '/public/SITO/lista.html') {
             res.redirect(`/eventi`);
         } else {
-            res.sendFile(file_upload);
+            res.redirect('/login_err');
         }
     });
 });
@@ -70,34 +71,32 @@ app.get("/login_err", (req, res) => {
 
 app.get('/eventi', (req, res) => {
     var ssn = req.session;
-    console.log(ssn.is_gestore);
     if (ssn.is_gestore === undefined) {
         res.redirect("/");
     } else {
         if (ssn.is_gestore == 0) {
             change_file('lista.html');
             q = 'SELECT * FROM evento';
-            console.log(q);
             db.query(q, (err, result) => {
                 if (err) throw err;
                 var fs = require('fs');
                 fs.readFile(file_upload, 'utf8', (err, data)=> {
                     if (err) throw err;
                     var $ = require('cheerio').load(data);
-                    var out = "<table>"
+                    var tabella = "<table>"
                     result.forEach( (row) => {
                         var data_i = row.data_inizio;
                         var data_f = row.data_fine;
-                        out = out + `<tr><td><td>${row.nome}</td><td>${data_i}</td><td>${data_f}</td><td>${row.luogo}</td><td>${row.artisti}</td><td>${row.genere}</td><td>${row.prezzo}</td></tr>`
+                        tabella = tabella + `<tr><div class="evento" id="${row.EID}">${row.nome}<br>${data_i} -> ${data_f}   Luogo: ${row.luogo}<br>${row.artisti}   Genere: ${row.genere}<br>${row.prezzo}</div></tr>`
                     });
-                    out = out + "</table>";
-                    res.send($.html().replace('<p>/lol/</p>', out));
+                    tabella = tabella + "</table>";
+                    
+                   var prof = "<img src='/static/img/anonimo.jpg'>";
+                   res.send($.html().replace('/lista/', tabella).replace('/profilo', prof));
                 });
             });
         } else if (ssn.is_gestore == 1) {
-            console.log("gesote");
             q = `SELECT * FROM evento WHERE UID = ${ssn.ID}`;
-            console.log(q);
             db.query(q, (err, result) => {
                 if (err) throw err;
                 var fs = require('fs');

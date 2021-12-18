@@ -1,14 +1,86 @@
 <html>
 <head>
   <title>TicketTwo</title>
+<style>
+div#menu {
+  width: 70%;
+  margin-left: 15%;
+}
+div#menu p {
+  background-color: #99FFFF;
+  margin: 5px 0 0 10%;
+  padding: 5px 0;
+  float: left;
+  width: 30%;
+  font-size: 20px;
+  height: 30px;
+}
+div#collegamenti {
+  background-color: #99FFFF;
+  margin: 5px 10% 0 0;
+  padding: 5px 0;
+  float: right;
+  width: 50%;
+  height: 30px;
+  font-size: 20px;
+  text-align: right;
+}
+div#collegamenti a {
+  margin: 0 6% 0 0;
+}
+div#collegamenti button {
+  padding: 5px 10px;
+  height: auto;
+  width: auto;
+  font-size: 13px;
+  background-color: cyan;
+  border-color: blue;
+  border-radius: 10px;
+}
+div#collegamenti button:hover {
+  background-color: white;
+}
+
+div#contenitore {
+  width: 70%;
+  font-size: 13px;
+  margin: 0 0 0 15%;
+}
+div#filtri {
+  width: 30%;
+  font-size: 15px;
+  float: left;
+  background-color: red;
+}
+div#lista {
+  width: 70%;
+  font-size: 13px;
+  float: right;
+  background-color: fuchsia;
+}
+div.evento {
+  border: 1px black solid;
+  border-radius: 15px;
+}
+</style>
 </head>
 <body>
+  <div id="menu">
+    <p>TicketTwo</p>
+    <div id="collegamenti">
+      <a href="/eventi"><button>lista eventi</button></a>
+      <a href="/biglietti"><button>lista biglietti</button></a>
+      <a href="/carrello">/carello/</button></a>
+      <a href="/profilo">/profilo/</a>
+    </div>
+  </div>
+  <br><br><br><br>
   <div id="contenitore">
     <div id="filtri">
       /filtri/
     </div>
     <div id="lista">
-      <p>/lol/</p>
+      /lista/
     </div>
   </div>
 </body>
