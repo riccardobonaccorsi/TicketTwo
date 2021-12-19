@@ -85,14 +85,54 @@ app.get('/eventi', (req, res) => {
                     var $ = require('cheerio').load(data);
                     var tabella = "<table>"
                     result.forEach( (row) => {
-                        var data_i = row.data_inizio;
-                        var data_f = row.data_fine;
-                        tabella = tabella + `<tr><div class="evento" id="${row.EID}">${row.nome}<br>${data_i} -> ${data_f}   Luogo: ${row.luogo}<br>${row.artisti}   Genere: ${row.genere}<br>${row.prezzo}</div></tr>`
+                        var data_i = "Data inizio: ";
+                        var tmp = row.data_inizio.getDate();
+                        if (tmp < 10) data_i += '0';
+                        data_i += tmp + "/";
+                        tmp = row.data_inizio.getMonth();
+                         if (tmp < 10) data_i += '0';
+                        data_i += tmp + "/";
+                        tmp = row.data_inizio.getFullYear();
+                        if (tmp < 10) data_i += '0';
+                        data_i += tmp + " ";
+                        tmp = row.data_inizio.getHours();
+                        if (tmp < 10) data_i += '0';
+                        data_i += tmp + ":";
+                        tmp = row.data_inizio.getMinutes();
+                        if (tmp < 10) data_i += '0';
+                        data_i += tmp + "";
+                        var data_f = "Data fine: ";
+                        tmp = row.data_fine.getDate();
+                        if (tmp < 10) data_f += '0';
+                        data_f += tmp + "/";
+                        tmp = row.data_fine.getMonth();
+                         if (tmp < 10) data_f += '0';
+                        data_f += tmp + "/";
+                        tmp = row.data_fine.getFullYear();
+                        if (tmp < 10) data_f += '0';
+                        data_f += tmp + " ";
+                        tmp = row.data_fine.getHours();
+                        if (tmp < 10) data_f += '0';
+                        data_f += tmp + ":";
+                        tmp = row.data_fine.getMinutes();
+                        if (tmp < 10) data_f += '0';
+                        data_f += tmp + "";
+                        tabella = tabella + `<tr><div class="evento" id="${row.EID}"><img src="/static/img/evento_anonimo.jpg"><p>${row.nome}<br>${data_i}  ${data_f}<br>Luogo: ${row.luogo}<br>Artisti: ${row.artisti}<br>Genere: ${row.genere}<br>Prezzo: ${row.prezzo}</p></div></tr>`
                     });
                     tabella = tabella + "</table>";
-                    
-                   var prof = "<img src='/static/img/anonimo.jpg'>";
-                   res.send($.html().replace('/lista/', tabella).replace('/profilo', prof));
+
+                    var filtri = '<form action="/eventi" method="get">';
+                    filtri = filtri + '<label for="">UID</label><br>';
+                    filtri = filtri + '<input type="number" id="UID" name="UID"><br><br>';
+                    filtri = filtri + '<label for="nome">Nome</label><br>';
+                    filtri = filtri + '<input type="text" id="nome" name="nome"><br><br>';
+                    filtri = filtri + '<label for="email">E-mail</label><br>';
+                    filtri = filtri + '<input type="email" id="email" name="email"><br><br>';
+                    filtri = filtri + '<input type="submit" value="Applica">';
+                    filtri = filtri + "</form>";
+
+                    var prof = "<img src='/static/img/anonimo.png'>";
+                    res.send($.html().replace('/lista/', tabella).replace('/filtri/', filtri).replace('/profilo/', prof));
                 });
             });
         } else if (ssn.is_gestore == 1) {
@@ -111,6 +151,16 @@ app.get('/eventi', (req, res) => {
                         out = out + `<tr><td>${row.EID}</td><td><a href='/API/ricercaGestore?UID=${row.UID}'>${row.UID}</a></td><td>${row.nome}</td><td>${data_i}</td><td>${data_f}</td><td>${row.luogo}</td><td>${row.artisti}</td><td>${row.genere}</td><td>${row.prezzo}</td><td><button>m</button><button>e</button></td></tr>`
                     });
                     out = out + "</table>";
+                    var filtri = '<form action="/API/ricercaUtente" method="get">';
+                        filtri = filtri + '<label for="UID">UID</label><br>';
+                        filtri = filtri + '<input type="number" id="UID" name="UID"><br><br>';
+                        filtri = filtri + '<label for="nome">Nome</label><br>';
+                        filtri = filtri + '<input type="text" id="nome" name="nome"><br><br>';
+                        filtri = filtri + '<label for="email">E-mail</label><br>';
+                        filtri = filtri + '<input type="email" id="email" name="email"><br><br>';
+                        filtri = filtri + '<input type="submit" value="Applica">';
+                        filtri = filtri + "</form>";
+
                     res.send($.html().replace('<p>/lol/</p>', out));
                 });
             });
@@ -118,4 +168,11 @@ app.get('/eventi', (req, res) => {
     }
 });
 
-// 
+// --------------------------
+//             /biglietti
+
+app.get('/biglietti', (req, res) => {
+  file_change('lista.html');
+  var ssn = req.session;
+  if (ssn.)
+});

@@ -6,29 +6,22 @@ div#menu {
   width: 70%;
   margin-left: 15%;
 }
-div#menu p {
-  background-color: #99FFFF;
-  margin: 5px 0 0 10%;
-  padding: 5px 0;
-  float: left;
-  width: 30%;
-  font-size: 20px;
-  height: 30px;
-}
-div#collegamenti {
-  background-color: #99FFFF;
-  margin: 5px 10% 0 0;
-  padding: 5px 0;
+div#menu table {
+  background-color: #00BFFF;
   float: right;
-  width: 50%;
-  height: 30px;
-  font-size: 20px;
-  text-align: right;
+  width: 100%;
+  empty-cells: show;
 }
-div#collegamenti a {
+div#menu td {
+  width: 15.5px;
+}
+div#menu a {
   margin: 0 6% 0 0;
 }
-div#collegamenti button {
+div#menu img {
+  width: 25px;
+}
+div#menu button {
   padding: 5px 10px;
   height: auto;
   width: auto;
@@ -37,7 +30,7 @@ div#collegamenti button {
   border-color: blue;
   border-radius: 10px;
 }
-div#collegamenti button:hover {
+div#menu button:hover {
   background-color: white;
 }
 
@@ -51,6 +44,7 @@ div#filtri {
   font-size: 15px;
   float: left;
   background-color: red;
+  text-align: center;
 }
 div#lista {
   width: 70%;
@@ -61,18 +55,30 @@ div#lista {
 div.evento {
   border: 1px black solid;
   border-radius: 15px;
+  height: 130px;
+}
+div.evento img {
+  float: left;
+  margin: 5px 15px 5px 5px;
+  height: 120px;
+  width: auto;
+  border-radius: 15px;
+}
+div.evento:hover{
+  background-color: cyan;
 }
 </style>
 </head>
 <body>
   <div id="menu">
-    <p>TicketTwo</p>
-    <div id="collegamenti">
-      <a href="/eventi"><button>lista eventi</button></a>
-      <a href="/biglietti"><button>lista biglietti</button></a>
-      <a href="/carrello">/carello/</button></a>
-      <a href="/profilo">/profilo/</a>
-    </div>
+    <table><tr>
+      <td>TicketTwo</td>
+      <td></td><td></td><td></td>
+      <td><a href="/eventi"><button>lista eventi</button></a></td>
+      <td><a href="/biglietti"><button>lista biglietti</button></a></td>
+      <td><a href="/carrello">/carello/</button></a></td>
+      <td><a href="/profilo">/profilo/</a></td>
+    </tr></table>
   </div>
   <br><br><br><br>
   <div id="contenitore">
