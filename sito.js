@@ -176,5 +176,5 @@ app.get('/eventi', (req, res) => {
 app.get('/biglietti', (req, res) => {
   file_change('lista.html');
   var ssn = req.session;
-  if (ssn.)
+//   if (ssn.)
 });
