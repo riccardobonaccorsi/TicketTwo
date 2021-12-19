@@ -117,7 +117,7 @@ app.get('/eventi', (req, res) => {
                         tmp = row.data_fine.getMinutes();
                         if (tmp < 10) data_f += '0';
                         data_f += tmp + "";
-                        tabella = tabella + `<tr><div class="evento" id="${row.EID}"><img src="/static/SITO/a.jpg"><p>${row.nome}<br>${data_i}  ${data_f}<br>Luogo: ${row.luogo}<br>Artisti: ${row.artisti}<br>Genere: ${row.genere}<br>Prezzo: ${row.prezzo}</p></div></tr>`
+                        tabella = tabella + `<tr><div class="evento" id="${row.EID}"><img src="/static/IMG/immagine_evento.jpg"><p>${row.nome}<br>${data_i}  ${data_f}<br>Luogo: ${row.luogo}<br>Artisti: ${row.artisti}<br>Genere: ${row.genere}<br>Prezzo: ${row.prezzo}</p></div></tr>`
                     });
                     tabella = tabella + "</table>";
 
@@ -131,8 +131,10 @@ app.get('/eventi', (req, res) => {
                     filtri = filtri + '<input type="submit" value="Applica">';
                     filtri = filtri + "</form>";
 
-                    var prof = "<img src='/static/img/anonimo.png'>";
-                    res.send($.html().replace('/lista/', tabella).replace('/filtri/', filtri).replace('/profilo/', prof));
+                    var prof = "<img src='/static/IMG/foto_account.jpg'>";
+                    var carr = "<img src='/static/IMG/carrello.jpg'>";
+                    console.log(carr);
+                    res.send($.html().replace('/lista/', tabella).replace('/filtri/', filtri).replace('/profilo/', prof).replace('/carrello/', carr));
                 });
             });
         } else if (ssn.is_gestore == 1) {
