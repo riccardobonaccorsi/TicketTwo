@@ -20,6 +20,7 @@ app.use(bodypars.urlencoded({ extended: true }));
 var file_upload = __dirname + "/public/API/api.html";
 
 // ------------------------------------------------------------------
+// MOSTRA
 
 app.get('/API/mostra/:table', (req, res, next) => {
   if (req.body != undefined) {
@@ -186,6 +187,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
 })
 
 // -------------------------------------------------------------------------------------
+//AGGIUNGI
 
 app.post('/API/aggiungi/:table', (req, res) => {
   console.log(req.body);
@@ -193,6 +195,7 @@ app.post('/API/aggiungi/:table', (req, res) => {
 });
 
 // -------------------------------------------------------------------------------------
+//MODIFICA
 
 app.get('/API/modifica/:table', (req, res, next) => {
   console.log(req.body);
@@ -200,6 +203,7 @@ app.get('/API/modifica/:table', (req, res, next) => {
 });
 
 // -------------------------------------------------------------------------------------
+//ELIMINA
 
 app.get('/API/elimina/:table', (req, res, next) => {
   console.log(req.body);
