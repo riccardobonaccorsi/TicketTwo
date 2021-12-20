@@ -49,7 +49,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
         if (req.params.table == "utente") {
           var filtri = '<form action="/API/mostra/utente" method="get">';
           filtri = filtri + '<label for="UID">UID</label><br>';
-          filtri = filtri + '<input type="number" id="UID" name="UID"><br><br>';
+          filtri = filtri + '<input type="number" id="UID" min="0" name="UID"><br><br>';
           filtri = filtri + '<label for="nome">Nome</label><br>';
           filtri = filtri + '<input type="text" id="nome" name="nome"><br><br>';
           filtri = filtri + '<label for="email">E-mail</label><br>';
@@ -77,7 +77,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
         } else if (req.params.table == "cliente") {
           var filtri = "<form method='get' action='/API/mostra/cliente'>";
           filtri = filtri + "<label for='UID'>UID</label><br>";
-          filtri = filtri + "<input type='number' nome='UID'><br><br>";
+          filtri = filtri + "<input type='number' min='0' nome='UID'><br><br>";
           filtri = filtri + "<label for='nome'>Nome</label><br>";
           filtri = filtri + "<input type='text' nome='nome'><br><br>";
           filtri = filtri + "<label for='cognome'>Cognome</label><br>";
@@ -108,9 +108,9 @@ app.get('/API/mostra/:table', (req, res, next) => {
             res.send($.html().replace('/titolo/', 'Cliente').replace('/filtri/', filtri).replace('/table/', out).replace('/agg/', aggiungi));
           });
         } else if (req.params.table == "gestore") {
-          var filtri = "<form method='get' action='/API/ricercaGestore'>";
+          var filtri = "<form method='get' action='/API/mostra/gestore'>";
           filtri = filtri + "<label for='UID'>UID</label><br>";
-          filtri = filtri + "<input type='number' nome='UID'><br><br>";
+          filtri = filtri + "<input type='number' min='0' nome='UID'><br><br>";
           filtri = filtri + "<label for='nome'>Nome</label><br>";
           filtri = filtri + "<input type='text' nome='nome'><br><br>";
           filtri = filtri + "<label for='email'>E-mail</label><br>";
@@ -137,9 +137,9 @@ app.get('/API/mostra/:table', (req, res, next) => {
             res.send($.html().replace('/titolo/', 'Gestore').replace('/filtri/', filtri).replace('/table/', out).replace('/agg/', aggiungi));
           });
         } else if (req.params.table == "evento") {
-          var filtri = "<form method='get' action='/API/ricercaEvento'>";
+          var filtri = "<form method='get' action='/API/mostra/evento'>";
           filtri = filtri + "<label for='EID'>EID</label><br>";
-          filtri = filtri + "<input type='number' min='1' nome='EID'><br>";
+          filtri = filtri + "<input type='number' min='0' nome='EID'><br>";
           filtri = filtri + "<label for='UID'>UID</label><br>";
 		      filtri = filtri + "<input type='number' min='1' nome='UID'><br>";
           filtri = filtri + "<label for='nome'>Nome</label><br>";
