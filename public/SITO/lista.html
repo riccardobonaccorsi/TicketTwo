@@ -2,61 +2,92 @@
 <head>
   <title>TicketTwo</title>
 <style>
+
+
+body{
+  background-color: rgb(2, 2, 156);
+}
+/*-----------------------------------------------------------*/
+/* tabella invisibile in alto */
+
 div#menu {
   width: 70%;
   margin-left: 15%;
 }
+
 div#menu table {
-  background-color: #00BFFF;
+  font-family: sans-serif;
   float: right;
   width: 100%;
   empty-cells: show;
 }
+
+div#menu th{
+  color: white;
+  font-size: 40px;
+  height: 100px;
+}
+
 div#menu td {
   width: 15.5px;
 }
-div#menu a {
-  margin: 0 6% 0 0;
+
+div#menu tr{
+  height: 50px;
 }
-div#menu img {
-  width: 25px;
-}
-div#menu button {
-  padding: 5px 10px;
+
+
+div#menu button{
   height: auto;
   width: auto;
-  font-size: 13px;
-  background-color: cyan;
-  border-color: blue;
   border-radius: 10px;
+
+  font-family: sans-serif;
+  font-size: 23px;
+
+  color: white; 
+  background-color: rgb(2, 2, 156); 
+  border: 2px solid white;
+  
+  padding: 5px 10px;
 }
-div#menu button:hover {
-  background-color: white;
+
+div#menu button:hover{
+  color: rgb(2, 2, 156); 
+  background-color: cyan; 
+  border: 2px solid white;
 }
+
+
+
+/*-----------------------------------------------------------------*/
+
 
 div#contenitore {
   width: 70%;
   font-size: 13px;
   margin: 0 0 0 15%;
 }
+
 div#filtri {
   width: 30%;
   font-size: 15px;
   float: left;
-  background-color: red;
   text-align: center;
 }
+
 div#lista {
   width: 70%;
   font-size: 13px;
   float: right;
-  background-color: fuchsia;
 }
+
 div.evento {
   border: 1px black solid;
   border-radius: 15px;
   height: 130px;
 }
+
 div.evento img {
   float: left;
   margin: 5px 15px 5px 5px;
@@ -64,21 +95,27 @@ div.evento img {
   width: auto;
   border-radius: 15px;
 }
+
 div.evento:hover{
   background-color: cyan;
 }
+
+
 </style>
 </head>
 <body>
   <div id="menu">
-    <table><tr>
-      <td>TicketTwo</td>
-      <td></td><td></td><td></td>
-      <td><a href="/eventi"><button>lista eventi</button></a></td>
-      <td><a href="/biglietti"><button>lista biglietti</button></a></td>
-      <td><a href="/carrello">/carello/</button></a></td>
-      <td><a href="/profilo">/profilo/</a></td>
-    </tr></table>
+    <table>
+      <tr><th colspan="4">TicketTwo</th></tr>
+
+      <tr>
+        <td><a href="/eventi"><button>lista eventi</button></a></td>
+        <td><a href="/biglietti"><button>lista biglietti</button></a></td>
+        <td><a href="/carrello">/carello/</button></a></td>
+        <td><a href="/profilo">/profilo/</a></td>
+      </tr>
+
+    </table>
   </div>
   <br><br><br><br>
   <div id="contenitore">

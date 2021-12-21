@@ -2,6 +2,17 @@
 <head>
   <title>TicketTwo</title>
 
+<script>
+function aggiungi() {
+  var red = "/API/modifica/" + document.URL.split('/')[5].split('&')[0];
+  var m = document.getElementsByClassName('m_');
+  for (var i = 0; i < m.length; i++) {
+    if (m[i].value != undefined) red += `&${m[i].name}=${m[i].value}`;
+  }
+  document.getElementById('m_a').href = red;
+}
+</script>
+
 <style>
 
 /* intestazioni */
@@ -193,13 +204,13 @@ div#filtri input[type = submit]:hover{
     </div>
     <br><br><br><br>
     <div id="filtri">
-      
       /filtri/
     </div>
     <div id="tabella">
       /table/
       <br>
-      <button id="aggiungi" action="return alert('ciao')">Aggiungi riga</button>
+      <button id="aggiungi" onclick="this.style.display = `none`; document.getElementById('f_aggiungi').style.display = 'block';">Aggiungi</button>
+      /agg/
     </div>
   </div>
 </body>
