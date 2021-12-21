@@ -16,6 +16,7 @@ db.connect((err) => {
 });
 
 const app = express();
+app.use('/static', express.static('public'));
 app.use(session({
     secret: `thisisasecret`,
     saveUninitialized: false,
@@ -56,6 +57,7 @@ app.post("/", (req, res) => {
             ssn.is_gestore = row.is_gestore;
         });
         if (file_upload == __dirname + '/public/SITO/lista.html') {
+            console.log('red');
             res.redirect(`/eventi`);
         } else {
             res.redirect('/login_err');
