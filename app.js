@@ -184,7 +184,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
           } else {
             var data_i = row.data_inizio.getDate() + "/" + row.data_inizio.getMonth() + "/" + row.data_inizio.getFullYear() + " " + row.data_inizio.getHours() + ":"  + row.data_inizio.getMinutes();
             var data_f = row.data_fine.getDate() + "/" + row.data_fine.getMonth() + "/" + row.data_fine.getFullYear()  + " " + row.data_fine.getHours() + ":"  + row.data_fine.getMinutes();
-            out = out + `<tr><td>${row.EID}</td><td><a href='/API/mostra/gestore?UID=${row.UID}'>${row.UID}</a></td><td>${row.nome}</td><td>${data_i}</td><td>${data_f}</td><td>${row.luogo}</td><td>${row.artisti}</td><td>${row.genere}</td><td>${row.prezzo}</td><td><a href="/API/mostra/evento?EID=${row.EID}&m=1"><button id='tabella'>m</button></a><a href="/API/elimina/evento?id=${row.UID}"><button id='tabella'>e</button></a></td></tr>`;
+            out = out + `<tr><td>${row.EID}</td><td><a href='/API/mostra/gestore?UID=${row.UID}'>${row.UID}</a></td><td>${row.nome}</td><td>${data_i}</td><td>${data_f}</td><td>${row.luogo}</td><td>${row.artisti}</td><td>${row.genere}</td><td>${row.prezzo}</td><td><a href="/API/mostra/evento?EID=${row.EID}&m=1"><button id='tabella'>m</button></a><a href="/API/elimina/evento?EID=${row.EID}"><button id='tabella'>e</button></a></td></tr>`;
           }
         });
         out = out + "</table>";
@@ -217,7 +217,7 @@ app.post('/API/aggiungi/:table', (req, res) => {
   for (var nome in req.body) { col += `${nome}, `; val += `'${req.body[nome]}', `; t = 2; }
   if (t!=0) { val = val.substring(0, val.length-t); col = col.substring(0, col.length-t); }
   db.query(q.replace('/col/', col).replace('/val/', val), (err, resu) => { if (err) throw err; });
-  res.redirect('/API/mmostra/' + req.params.table);
+  res.redirect('/API/mostra/' + req.params.table);
 });
 
 // -------------------------------------------------------------------------------------
@@ -243,7 +243,7 @@ app.get('/API/modifica/:table', (req, res, next) => {
 app.get('/API/elimina/:table', (req, res, next) => {
   var q = `DELETE FROM ${req.params.table} WHERE `;
   if (req.params.table == 'evento') {
-    q = q + 'EID = ';
+    q = q + 'EID = ' + req.query['EID'];
   } else {
     q = q + 'UID = ' + req.query['UID'];
   }
