@@ -1,5 +1,5 @@
 const express = require('express');
-var session = require('express-session');
+const session = require('express-session');
 const mysql = require('mysql');
 const bodypars = require('body-parser');
 const Connection = require('mysql/lib/Connection');
@@ -22,6 +22,7 @@ app.use(session({
     saveUninitialized: false,
     resave: false
 }));
+app.use('/static', express.static('public'));
 app.use(bodypars.json());
 app.use(bodypars.urlencoded({ extended: true }));
 
@@ -31,7 +32,7 @@ var file_upload = "";
 function change_file(nome) {
   file_upload = __dirname + `/public/SITO/${nome}`;
 }
-
+console.log(__dirname);
 // ----------------------------------------------------------------------------------
 //                      PAGINA DI LOGIN
 
@@ -42,23 +43,24 @@ app.get("/", (req, res) => {
 app.post("/", (req, res) => {
     var ssn = req.session;
     change_file('login_err.html');
-    var q = `SELECT UID, nome, is_gestore FROM utente WHERE email="${req.body.email}" AND psw = "${req.body.psw}";`;
+    var q = `SELECT UID, nome, path_image_profile AS path, is_gestore FROM utente WHERE email="${req.body.email}" AND psw = "${req.body.psw}";`;
     db.query(q, (err, result) => {
         if (err) {
             res.sendFile(file_upload);
             throw err;
         }
-        result.forEach( (row) => { 
+        result.forEach( (row) => {
             change_file('lista.html');
             ssn.ID = row.UID;
             ssn.nome = row.nome;
+            ssn.path_image = row.path;
             ssn.is_gestore = row.is_gestore;
         });
         if (file_upload == __dirname + '/public/SITO/lista.html') {
             console.log('red');
             res.redirect(`/eventi`);
         } else {
-            res.sendFile(file_upload);        
+            res.redirect('/login_err');
         }
     });
 });
@@ -117,7 +119,7 @@ app.get('/eventi', (req, res) => {
                         tmp = row.data_fine.getMinutes();
                         if (tmp < 10) data_f += '0';
                         data_f += tmp + "";
-                        tabella = tabella + `<tr><div class="evento" id="${row.EID}"><img src="/static/SITO/a.jpg"><p>${row.nome}<br>${data_i}  ${data_f}<br>Luogo: ${row.luogo}<br>Artisti: ${row.artisti}<br>Genere: ${row.genere}<br>Prezzo: ${row.prezzo}</p></div></tr>`
+                        tabella = tabella + `<tr><div class="evento" id="${row.EID}"><img src="/static/img/evento_anonimo.jpg"><p>${row.nome}<br>${data_i}  ${data_f}<br>Luogo: ${row.luogo}<br>Artisti: ${row.artisti}<br>Genere: ${row.genere}<br>Prezzo: ${row.prezzo}</p></div></tr>`
                     });
                     tabella = tabella + "</table>";
 
@@ -168,4 +170,11 @@ app.get('/eventi', (req, res) => {
     }
 });
 
-// 
+// --------------------------
+//             /biglietti
+
+app.get('/biglietti', (req, res) => {
+  file_change('lista.html');
+  var ssn = req.session;
+  if (ssn.)
+});
