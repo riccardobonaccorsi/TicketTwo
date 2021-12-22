@@ -133,8 +133,10 @@ app.get('/eventi', (req, res) => {
                     filtri = filtri + '<input type="submit" value="Applica">';
                     filtri = filtri + "</form>";
 
-                    var prof = "<img src='/static/img/anonimo.png'>";
-                    res.send($.html().replace('/lista/', tabella).replace('/filtri/', filtri).replace('/profilo/', prof));
+                    var prof = "<img src='/static/IMG/foto_account.jpg'>";
+                    var carr = "<img src='/static/IMG/carrello.jpg'>";
+                    console.log(carr);
+                    res.send($.html().replace('/lista/', tabella).replace('/filtri/', filtri).replace('/profilo/', prof).replace('/carrello/', carr));
                 });
             });
         } else if (ssn.is_gestore == 1) {

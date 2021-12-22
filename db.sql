@@ -75,3 +75,12 @@ INSERT INTO `evento` (UID, nome, data_inizio, data_fine, luogo, artisti, genere,
 	(9, 'HotMusic', "2022-06-09 00:00:00", "2022-06-10 05:00:00", 'Roma',	'Vari', 'Dance', 42.99),
 	(4, 'Vasco a Trento', "2021-12-17 19:00:00", "2021-12-19 23:00:00", 'Trento',	'Vasco Rossi', 'Rock', 58.00);
 
+CREATE TABLE `biglietti` (
+  UID int NOT NULL,
+  EID int NOT NULL,
+  codice int(6) NOT NULL,
+  n_persone int NOT NULL,
+  PRIMARY KEY (UID, EID),
+  FOREIGN KEY (UID) REFERENCES cliente(UID),
+  FOREIGN KEY(EID) REFERENCES evento(EID)
+);
