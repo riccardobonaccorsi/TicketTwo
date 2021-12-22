@@ -67,7 +67,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
         out = out + "<tr><th>UID</th><th>Nome</th><th>E-mail</th><th></th></tr>";
         risultati.forEach( (row) => {
           if (modifica) out = out + `<tr><td>${row.UID}</td><td><input type="text" id="m_nome" class='m_' name="nome" value="${row.nome}"></td><td><input type="email" id="m_email" class='m_' name="email" value="${row.email}"></td><td><a id='m_a' onclick='return aggiungi();'><button>Salva</button></a></td></tr>`;
-          else if (erro && row.UID == id) { out = out + `<tr style="border: 2px solid red"><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td><a href="/API/mostra/utente?UID=${row.UID}&m=1"><button id='tabella'>m</button></a><a href="/API/elimina/utente?UID=${row.UID}"><button id='tabella'>e</button></a></td></tr>`; out = out + `<tr><td colspan=4>Impossibile eliminare questo elemento, verificare che in cliente o gestore non ci sia lo stesso UID assegnato</td></tr>` }
+          else if (erro && row.UID == id) { out = out + `<tr style="border: 2px solid red"><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td><a href="/API/mostra/utente?UID=${row.UID}&m=1"><button id='tabella'><img src='/static/img/modifica.png'></button></a><a href="/API/elimina/utente?UID=${row.UID}"><button id='tabella'><img src='/static/img/cestino.jpg'></button></a></td></tr>`; out = out + `<tr><td colspan=4>Impossibile eliminare questo elemento, verificare che in cliente o gestore non ci sia lo stesso UID assegnato</td></tr>` }
           else out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td><a href="/API/mostra/utente?UID=${row.UID}&m=1"><button id='tabella'><img src='/static/img/modifica.png'></button></a><a href="/API/elimina/utente?UID=${row.UID}"><button id='tabella'><img src='/static/img/cestino.jpg'></button></a></td></tr>`;
         });
 
@@ -104,7 +104,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
         out = out + "<tr><th>UID</th><th>Nome</th><th>Cognome</th><th>E-mail</th><th>Data di nascita</th><th>Residenza</th><th></th></tr>";
         risultati.forEach( (row) => {
           if (modifica) out = out + `<tr><td>${row.UID}</td><td>${row.nome}<td><input type="text" id="m_cognome" class='m_' name="cognome" value="${row.cognome}"></td><td>${row.email}<td><input type="date" id="m_data" class='m_' name="data_nascita" value="${row.data_nascita}"></td><td><input type="text" id="m_residenza" class="m_" name="residenza" value="${row.residenza}"></td><td><a id='m_a' onclick='return aggiungi();'><button>Salva</button></a></td></tr>`;
-          else out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.cognome}</td><td>${row.email}</td><td>${row.data_nascita.getDate()}/${row.data_nascita.getMonth()+1}/${row.data_nascita.getFullYear()}</td><td>${row.residenza}</td><td><a href="/API/mostra/cliente?UID=${row.UID}&m=1"><button id='tabella'>m</button></a><a href="/API/elimina/cliente?UID=${row.UID}"><button id='tabella'>e</button></a></td></tr>`;
+          else out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.cognome}</td><td>${row.email}</td><td>${row.data_nascita.getDate()}/${row.data_nascita.getMonth()+1}/${row.data_nascita.getFullYear()}</td><td>${row.residenza}</td><td><a href="/API/mostra/cliente?UID=${row.UID}&m=1"><button id='tabella'><img src='/static/img/modifica.png'></button></a><a href="/API/elimina/cliente?UID=${row.UID}"><button id='tabella'><img src='/static/img/cestino.jpg'></button></a></td></tr>`;
         });
 
         out = out + "</table>";
@@ -137,7 +137,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
         out = out + "<tr><th>UID</th><th>Nome</th><th>E-mail</th><th>Dati bancari</th><th></th></tr>";
         risultati.forEach( (row) => {
           if (modifica) out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td><input type="text" id="m_dati" class="m_" name="dati_bancari" value="${row.dati_bancari}"></td><td><a id="m_a" onclick="return aggiungi();"><button>Salva</button></a></tr>`;
-          else out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td>${row.dati_bancari}</td><td><a href="/API/mostra/gestore?UID=${row.UID}&m=1"><button id='tabella'>m</button></a><a href="/API/elimina/gestore?id=${row.UID}"><button id='tabella'>e</button></a></td></tr>`;
+          else out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td>${row.dati_bancari}</td><td><a href="/API/mostra/gestore?UID=${row.UID}&m=1"><button id='tabella'><img src='/static/img/modifica.png'></button></a><a href="/API/elimina/gestore?id=${row.UID}"><button id='tabella'><img src='/static/img/cestino.jpg'>'</button></a></td></tr>`;
         });
         out = out + "</table>";
 
@@ -185,7 +185,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
           } else {
             var data_i = row.data_inizio.getDate() + "/" + row.data_inizio.getMonth() + "/" + row.data_inizio.getFullYear() + " " + row.data_inizio.getHours() + ":"  + row.data_inizio.getMinutes();
             var data_f = row.data_fine.getDate() + "/" + row.data_fine.getMonth() + "/" + row.data_fine.getFullYear()  + " " + row.data_fine.getHours() + ":"  + row.data_fine.getMinutes();
-            out = out + `<tr><td>${row.EID}</td><td><a href='/API/mostra/gestore?UID=${row.UID}'>${row.UID}</a></td><td>${row.nome}</td><td>${data_i}</td><td>${data_f}</td><td>${row.luogo}</td><td>${row.artisti}</td><td>${row.genere}</td><td>${row.prezzo}</td><td><a href="/API/mostra/evento?EID=${row.EID}&m=1"><button id='tabella'>m</button></a><a href="/API/elimina/evento?EID=${row.EID}"><button id='tabella'>e</button></a></td></tr>`;
+            out = out + `<tr><td>${row.EID}</td><td><a href='/API/mostra/gestore?UID=${row.UID}'>${row.UID}</a></td><td>${row.nome}</td><td>${data_i}</td><td>${data_f}</td><td>${row.luogo}</td><td>${row.artisti}</td><td>${row.genere}</td><td>${row.prezzo}</td><td><a href="/API/mostra/evento?EID=${row.EID}&m=1"><button id='tabella'><img src='/static/img/modifica.png'></button></a><a href="/API/elimina/evento?EID=${row.EID}"><button id='tabella'><img src='/static/img/cestino.jpg'></button></a></td></tr>`;
           }
         });
         out = out + "</table>";
