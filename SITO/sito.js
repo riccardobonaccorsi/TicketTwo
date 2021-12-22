@@ -32,7 +32,6 @@ var file_upload = "";
 function change_file(nome) {
   file_upload = __dirname + `/public/SITO/${nome}`;
 }
-console.log(__dirname);
 // ----------------------------------------------------------------------------------
 //                      PAGINA DI LOGIN
 
@@ -57,7 +56,6 @@ app.post("/", (req, res) => {
             ssn.is_gestore = row.is_gestore;
         });
         if (file_upload == __dirname + '/public/SITO/lista.html') {
-            console.log('red');
             res.redirect(`/eventi`);
         } else {
             res.redirect('/login_err');
@@ -78,7 +76,11 @@ app.get('/eventi', (req, res) => {
     } else {
         if (ssn.is_gestore == 0) {
             change_file('lista.html');
-            q = 'SELECT * FROM evento';
+            q = 'SELECT * FROM evento WHERE ';
+            var t = 6;
+            for (var nome in req.query) if (req.query[nome] != '') { if (nome == 'prezzo_min') q += 'prezzo>=' + req.query[nome] + ' AND '; else if (nome == "prezzo_max") q += 'prezzo<=' + req.query[nome] + ' AND '; else if (nome == 'UID' && req.query[nome] != 0) q += nome + '=' + req.query[nome] + ' AND '; t = 4; }
+            q = q.substring(0, q.length-t);
+            q += ';';
             db.query(q, (err, result) => {
                 if (err) throw err;
                 var fs = require('fs');
@@ -119,24 +121,32 @@ app.get('/eventi', (req, res) => {
                         tmp = row.data_fine.getMinutes();
                         if (tmp < 10) data_f += '0';
                         data_f += tmp + "";
-                        tabella = tabella + `<tr><div class="evento" id="${row.EID}"><img src="/static/img/evento_anonimo.jpg"><p>${row.nome}<br>${data_i}  ${data_f}<br>Luogo: ${row.luogo}<br>Artisti: ${row.artisti}<br>Genere: ${row.genere}<br>Prezzo: ${row.prezzo}</p></div></tr>`
+                        tabella = tabella + `<tr><div class="evento" id="${row.EID}"><IMG src="/static/IMG/evento_anonimo.jpg"><p>${row.nome}<br>${data_i}  ${data_f}<br>Luogo: ${row.luogo}<br>Artisti: ${row.artisti}<br>Genere: ${row.genere}<br>Prezzo: ${row.prezzo}</p></div></tr>`
                     });
                     tabella = tabella + "</table>";
 
                     var filtri = '<form action="/eventi" method="get">';
                     filtri = filtri + '<label for="">UID</label><br>';
-                    filtri = filtri + '<input type="number" id="UID" name="UID"><br><br>';
-                    filtri = filtri + '<label for="nome">Nome</label><br>';
-                    filtri = filtri + '<input type="text" id="nome" name="nome"><br><br>';
-                    filtri = filtri + '<label for="email">E-mail</label><br>';
-                    filtri = filtri + '<input type="email" id="email" name="email"><br><br>';
-                    filtri = filtri + '<input type="submit" value="Applica">';
-                    filtri = filtri + "</form>";
-
-                    var prof = "<img src='/static/IMG/foto_account.jpg'>";
-                    var carr = "<img src='/static/IMG/carrello.jpg'>";
-                    console.log(carr);
-                    res.send($.html().replace('/lista/', tabella).replace('/filtri/', filtri).replace('/profilo/', prof).replace('/carrello/', carr));
+                    q = 'SELECT UID, nome FROM utente WHERE UID in (SELECT UID FROM gestore);';
+                    db.query(q, (err, risultati) => {
+                        filtri = filtri + '<select name="UID"><option value="0">0 - seleziona</option>'
+                        risultati.forEach((row) => { filtri += `<option value='${row.UID}'>${row.UID} - ${row.nome}</option>` })
+                        filtri = filtri + '</select><br><br>';
+                        filtri = filtri + '<label for="nome">Nome</label><br>';
+                        filtri = filtri + '<input type="text" id="nome" name="nome"><br><br>';
+                        filtri = filtri + '<label for="email">E-mail</label><br>';
+                        q = 'SELECT MAX(prezzo) AS M, MIN(prezzo) AS m FROM evento';
+                        db.query(q, (err, risultati) => {
+                            filtri = filtri + `<input type="number" min="${risultati[0].m}" value="${risultati[0].m}" id="min" name="prezzo_min">`;
+                            filtri = filtri + `<input type="number" max="${risultati[0].M}" value="${risultati[0].M}" id="max" name="prezzo_max"><br><br>`;
+                            filtri = filtri + '<input type="submit" value="Applica">';
+                            filtri = filtri + "</form>";
+    
+                            var prof = "<IMG src='/static/IMG/foto_account.jpg'>";
+                            var carr = "<IMG src='/static/IMG/carrello.jpg'>";
+                            res.send($.html().replace('/lista/', tabella).replace('/filtri/', filtri).replace('/profilo/', prof).replace('/carrello/', carr));  
+                        })
+                    });
                 });
             });
         } else if (ssn.is_gestore == 1) {
