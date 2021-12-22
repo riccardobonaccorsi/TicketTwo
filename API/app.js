@@ -70,7 +70,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
         var out = "<table>"
         out = out + "<tr><th>UID</th><th>Nome</th><th>E-mail</th><th></th></tr>";
         risultati.forEach( (row) => {
-          if (modifica) out = out + `<tr><td>${row.UID}</td><td><input type="text" id="m_nome" class='m_' name="nome" value="${row.nome}"></td><td><input type="email" id="m_email" class='m_' name="email" value="${row.email}"></td><td><a id='m_a' onclick='return aggiungi();'><button>Salva</button></a></td></tr>`;
+          if (modifica) out = out + `<tr><td>${row.UID}</td><td><input required type="text" id="m_nome" class='m_' name="nome" value="${row.nome}"></td><td><input required type="email" id="m_email" class='m_' name="email" value="${row.email}"></td><td><a id='m_a' onclick='return aggiungi();'><button>Salva</button></a></td></tr>`;
           else if (erro && row.UID == id) { out = out + `<tr style="background-color: ff3333;"><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td><a href="/API/mostra/utente?UID=${row.UID}&m=1"><button id='tabella'><img src='/static/img/modifica.png'></button></a><a href="/API/elimina/utente?UID=${row.UID}"><button id='tabella'><img src='/static/img/cestino.jpg'></button></a></td></tr>`; out = out + `<tr style='background-color: ff9999; '><td colspan=4>Impossibile eliminare questo elemento. E' necessario prima eliminarlo dalla collezione cliente o gestore.</td></tr>` }
           else out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td><a href="/API/mostra/utente?UID=${row.UID}&m=1"><button id='tabella'><img src='/static/img/modifica.png'></button></a><a href="/API/elimina/utente?UID=${row.UID}"><button id='tabella'><img src='/static/img/cestino.jpg'></button></a></td></tr>`;
         });
@@ -79,7 +79,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
         aggiungi = aggiungi + '<form action="/API/aggiungi/utente" method="post" id="f_aggiungi"  style="display:none">';
         aggiungi = aggiungi + '<table>';
         aggiungi = aggiungi + '<tr><th>Nome</th><th>Email</th><th>Password</th><th></th></tr>';
-        aggiungi = aggiungi + '<tr><td><input type="text" name="nome"></td><td><input type="email" name="email"></td><td><input type="password" name="psw"></td><td><input id="s_aggiungi" type="submit"></td></tr>';
+        aggiungi = aggiungi + '<tr><td><input required type="text" name="nome"></td><td><input required type="email" name="email"></td><td><input required type="password" name="psw"></td><td><input id="s_aggiungi" type="submit"></td></tr>';
         aggiungi = aggiungi + '</table></form>';
         var fs = require('fs');
         fs.readFile(file_upload, 'utf8', (err, data) => {
@@ -107,7 +107,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
         var out = "<table>"
         out = out + "<tr><th>UID</th><th>Nome</th><th>Cognome</th><th>E-mail</th><th>Data di nascita</th><th>Residenza</th><th></th></tr>";
         risultati.forEach( (row) => {
-          if (modifica) out = out + `<tr><td>${row.UID}</td><td>${row.nome}<td><input type="text" id="m_cognome" class='m_' name="cognome" value="${row.cognome}"></td><td>${row.email}<td><input type="date" id="m_data" class='m_' name="data_nascita" value="${row.data_nascita}"></td><td><input type="text" id="m_residenza" class="m_" name="residenza" value="${row.residenza}"></td><td><a id='m_a' onclick='return aggiungi();'><button>Salva</button></a></td></tr>`;
+          if (modifica) out = out + `<tr><td>${row.UID}</td><td>${row.nome}<td><input required type="text" id="m_cognome" class='m_' name="cognome" value="${row.cognome}"></td><td>${row.email}<td><input required type="date" id="m_data" class='m_' name="data_nascita" value="${row.data_nascita}"></td><td><input required type="text" id="m_residenza" class="m_" name="residenza" value="${row.residenza}"></td><td><a id='m_a' onclick='return aggiungi();'><button>Salva</button></a></td></tr>`;
           else out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.cognome}</td><td>${row.email}</td><td>${row.data_nascita.getDate()}/${row.data_nascita.getMonth()+1}/${row.data_nascita.getFullYear()}</td><td>${row.residenza}</td><td><a href="/API/mostra/cliente?UID=${row.UID}&m=1"><button id='tabella'><img src='/static/img/modifica.png'></button></a><a href="/API/elimina/cliente?UID=${row.UID}"><button id='tabella'><img src='/static/img/cestino.jpg'></button></a></td></tr>`;
         });
 
@@ -120,7 +120,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
           uid += '</select>';
           aggiungi = aggiungi + '<form action="/API/aggiungi/cliente" method="post" id="f_aggiungi"  style="display:none"><table>';
           aggiungi = aggiungi + '<tr><th>Uid</th><th>Cognome</th><th>Data di Nascita</th><th>Residenza</th><th></th></tr>';
-          aggiungi = aggiungi + '<tr><td><input type="number" min = 0 name="uid"></td><td> <input type="text" name="cognome"></td><td> <input type="date" name="data_nascita"></td><td> <input type="text" name="residenza"></td><td> <input id="s_aggiungi" type="submit"></td></tr>';
+          aggiungi = aggiungi + '<tr><td>' + uid + '</td><td> <input required type="text" name="cognome"></td><td> <input required type="date" name="data_nascita"></td><td> <input required type="text" name="residenza"></td><td> <input id="s_aggiungi" type="submit"></td></tr>';
           aggiungi = aggiungi + '</table></form>';
 
           var fs = require('fs');
@@ -146,7 +146,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
         var out = "<table>"
         out = out + "<tr><th>UID</th><th>Nome</th><th>E-mail</th><th>Dati bancari</th><th></th></tr>";
         risultati.forEach( (row) => {
-          if (modifica) out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td><input type="text" id="m_dati" class="m_" name="dati_bancari" value="${row.dati_bancari}"></td><td><a id="m_a" onclick="return aggiungi();"><button>Salva</button></a></tr>`;
+          if (modifica) out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td><input required type="text" id="m_dati" class="m_" name="dati_bancari" value="${row.dati_bancari}"></td><td><a id="m_a" onclick="return aggiungi();"><button>Salva</button></a></tr>`;
           else out = out + `<tr><td>${row.UID}</td><td>${row.nome}</td><td>${row.email}</td><td>${row.dati_bancari}</td><td><a href="/API/mostra/gestore?UID=${row.UID}&m=1"><button id='tabella'><img src='/static/img/modifica.png'></button></a><a href="/API/elimina/gestore?id=${row.UID}"><button id='tabella'><img src='/static/img/cestino.jpg'>
           </button></a></td></tr>`;
         });
@@ -160,7 +160,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
 
           aggiungi = aggiungi + '<form action="/API/aggiungi/gestore" method="post" id="f_aggiungi" style="display:none"><table>';
           aggiungi = aggiungi + '<tr><th>Uid</th><th>Dati bancari</th><th></th></tr>';
-          aggiungi = aggiungi + '<tr><td>' + uid + '</td><td><input type="text" name="dati_bancaro"></td><td><input id="s_aggiungi" type="submit"></td></tr>';
+          aggiungi = aggiungi + '<tr><td>' + uid + '</td><td><input required type="text" name="dati_bancaro"></td><td><input id="s_aggiungi" type="submit"></td></tr>';
           aggiungi = aggiungi + '</table></form>';
 
           var fs = require('fs');
@@ -199,7 +199,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
           if (modifica) {
             var data_i = row.data_inizio.getFullYear() + "-"; if(row.data_inizio.getMonth()<10) data_i += "0"; data_i += row.data_inizio.getMonth() + "-"; if(row.data_inizio.getDate()<10) data_i += "0"; data_i += row.data_inizio.getDate()  + "T"; if(row.data_inizio.getHours()<10) data_i += "0"; data_i += row.data_inizio.getHours() + ":"; if (row.data_inizio.getMinutes()<10) data_i += "0"; data_i += row.data_inizio.getMinutes();
             var data_f = row.data_fine.getFullYear() + "-"; if(row.data_fine.getMonth()<10) data_f += "0"; data_f += row.data_fine.getMonth() + "-"; if(row.data_fine.getDate()<10) data_f += "0"; data_f += row.data_fine.getDate()  + "T"; if(row.data_fine.getHours()<10) data_f += "0"; data_f += row.data_fine.getHours() + ":"; if (row.data_fine.getMinutes()<10) data_f += "0"; data_f += row.data_fine.getMinutes();
-            out = out + `<tr><td>${row.EID}</td><td><input type="number" min='1' id="m_UID" class="m_" name="UID" value="${row.UID}"></td><td><input type="text" id="m_nome" class="m_" value="${row.nome}"></td><td><input type="datetime-local" id="m_data_inizio" class="m_" name="data_inizio" value="${data_i}"></td><td><input type="datetime-local" id="m_data_fine" class="m_" name="data_fine" value="${data_f}"></td><td><input type="text" id="m_luogo" class="m_" name="luogo" value="${row.luogo}"></td><td><input type="text" id="m_artisti" class="m_" name="artisti" value="${row.artisti}"></td><td><input type="text" id="m_genere" class="m_" name="genere" value="${row.genere}"></td><td><input type="number" id="m_prezzo" class="m_" name="prezzo" value="${row.prezzo}"></td><td><a id="m_a" onclick="return aggiungi();">Salva</a></td></tr>`;
+            out = out + `<tr><td>${row.EID}</td><td><input required type="number" min='1' id="m_UID" class="m_" name="UID" value="${row.UID}"></td><td><input required type="text" id="m_nome" class="m_" value="${row.nome}"></td><td><input required type="datetime-local" id="m_data_inizio" class="m_" name="data_inizio" value="${data_i}"></td><td><input required type="datetime-local" id="m_data_fine" class="m_" name="data_fine" value="${data_f}"></td><td><input required type="text" id="m_luogo" class="m_" name="luogo" value="${row.luogo}"></td><td><input required type="text" id="m_artisti" class="m_" name="artisti" value="${row.artisti}"></td><td><input required type="text" id="m_genere" class="m_" name="genere" value="${row.genere}"></td><td><input required type="number" id="m_prezzo" class="m_" name="prezzo" value="${row.prezzo}"></td><td><a id="m_a" onclick="return aggiungi();">Salva</a></td></tr>`;
           } else {
             var data_i = row.data_inizio.getDate() + "/" + row.data_inizio.getMonth() + "/" + row.data_inizio.getFullYear() + " " + row.data_inizio.getHours() + ":"  + row.data_inizio.getMinutes();
             var data_f = row.data_fine.getDate() + "/" + row.data_fine.getMonth() + "/" + row.data_fine.getFullYear()  + " " + row.data_fine.getHours() + ":"  + row.data_fine.getMinutes();
@@ -216,9 +216,9 @@ app.get('/API/mostra/:table', (req, res, next) => {
 
           aggiungi = aggiungi + '<form action="/API/aggiungi/evento" method="post" id="f_aggiungi"  style="display:none"><table>';
           aggiungi = aggiungi + '<tr><th>Uid</th><th>Nome</th><th>Data e ora inizio</th><th>Data e ora fine</th><th></th></tr>';
-          aggiungi = aggiungi + '<tr><td>' + uid + '</td><td><input type="text" name="nome"></td><td><input type="datetime-local" name="data_inizio"></td><td><input type="datetime-local" name="data_fine"></td><td></td></tr>';
+          aggiungi = aggiungi + '<tr><td>' + uid + '</td><td><input required type="text" name="nome"></td><td><input required type="datetime-local" name="data_inizio"></td><td><input required type="datetime-local" name="data_fine"></td><td></td></tr>';
           aggiungi = aggiungi + '<tr><th>Luogo</th><th>Artisti</th><th>Genere</th><th>Prezzo</th><th></th></tr>';
-          aggiungi = aggiungi + '<tr><td><input type="text" name="luogo"></td><td><input type="text" name="artisti"></td><td><input type="text" name="genere"></td><td><input type="number" step="0.01" name="prezzo"></td><td> <input id="s_aggiungi" type="submit"></td></tr>';
+          aggiungi = aggiungi + '<tr><td><input required type="text" name="luogo"></td><td><input required type="text" name="artisti"></td><td><input required type="text" name="genere"></td><td><input required type="number" step="0.01" name="prezzo"></td><td> <input id="s_aggiungi" type="submit"></td></tr>';
           aggiungi = aggiungi + '</table></form>';
 
           var fs = require('fs');
