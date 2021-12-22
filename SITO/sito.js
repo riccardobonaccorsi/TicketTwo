@@ -126,11 +126,11 @@ app.get('/eventi', (req, res) => {
                     tabella = tabella + "</table>";
 
                     var filtri = '<form action="/eventi" method="get">';
-                    filtri = filtri + '<label for="">UID</label><br>';
+                    filtri = filtri + '<label for="">Organizzatore</label><br>';
                     q = 'SELECT UID, nome FROM utente WHERE UID in (SELECT UID FROM gestore);';
                     db.query(q, (err, risultati) => {
-                        filtri = filtri + '<select name="UID"><option value="0">0 - seleziona</option>'
-                        risultati.forEach((row) => { filtri += `<option value='${row.UID}'>${row.UID} - ${row.nome}</option>` })
+                        filtri = filtri + '<select name="UID"><option value="0">Seleziona</option>'
+                        risultati.forEach((row) => { filtri += `<option value='${row.UID}'>${row.nome}</option>` })
                         filtri = filtri + '</select><br><br>';
                         filtri = filtri + '<label for="nome">Nome</label><br>';
                         filtri = filtri + '<input type="text" id="nome" name="nome"><br><br>';
