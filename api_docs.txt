@@ -1,0 +1,32 @@
+Documentazione API
+Get{Mostra, Modifica, Elimina}
+Post
+JSON Get: {select, join, aggiungi, update}
+
+app.get('/API/mostra/:table', (req, res, next)
+    Tramite questa API l’applicazione può recuperare l’elenco degli utenti attualmente memorizzati nel sistema e modificarne le informazioni o addirittura eliminare un utente. Ritorna tutti gli utenti tramite una query sul database di sistema e in caso di errore riporta l’errore nella console. 
+    Prende in input una tabella e come output restituisce la visualizzazione della stessa.
+
+app.get('/API/modifica/:table', (req, res, next)
+    Tramite questa API l’applicazione implementa la possibilità di modificare le informazioni utente.
+    Prende in input una tabella e dei valori e restituisce una stampa della tabella stessa con i valori aggiornati.
+
+app.get('/API/elimina/:table', (req, res, next)
+    Tramite questa API l’applicazione implementa la possibilità di modificare le informazioni utente.
+    Prende in input una tabella e un valore (che può essere o un identificativo di un evento o un identificativo di un utente) e restituisce una stampa della tabella stessa dopo l’eliminazione della riga contenente tale valore.
+
+app.post('/API/aggiungi/:table', (req, res)
+    Questa API risulterà necessaria per creare l’elenco degli utenti su cui si basa tutta l’applicazione
+    Prende in input una tabella e una serie di valori (i nomi dei campi da riempire con i relativi valori ) e restituisce una stampa della tabella stessa però popolata.
+
+app.get('/API/json/select/:table', (req, res, next)
+    prende in input una taballa e una query e restituisce un json con la query eseguita
+
+app.get('/API/json/join/:table/:table2', (req, res, next)
+    prende in input 2 tabelle e una query e restituisce un json con il join tra le 2
+
+app.get('/API/json/aggiungi/:table', (req, res, next)
+    prende in input una tabella e dei valori e restituisce un json con la tabella aggiornata
+
+app.get('/API/json/update/:table', (req, res, next)
+    prende in input una tabella, dei valori e dei campi e restituisce un json con la tabella aggiornata nei cui campi sono stati inseriti i valori
