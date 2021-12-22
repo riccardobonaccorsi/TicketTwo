@@ -12,7 +12,6 @@ const db = mysql.createConnection({
 });
 db.connect((err) => {
   if (err) throw err;
-  console.log('connsesso');
 });
 
 const app = express();
@@ -26,7 +25,7 @@ app.use('/static', express.static('public'));
 app.use(bodypars.json());
 app.use(bodypars.urlencoded({ extended: true }));
 
-app.listen(3000, () => { console.log('server start on port 3000'); });
+app.listen(3000, () => { console.log('server started: go to the following link: http://localhost:3000/'); });
 
 var file_upload = "";
 function change_file(nome) {
