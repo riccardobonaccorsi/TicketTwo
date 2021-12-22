@@ -20,8 +20,9 @@ app.use(bodypars.urlencoded({ extended: true }));
 
 var file_upload = __dirname + "/public/API/api.html";
 
-// ------------------------------------------------------------------
-
+//                      GESTIONE DATI
+// ------------------------------------------------------------------------------------
+// MOSTRA
 app.get('/API/mostra/:table', (req, res, next) => {
   if (req.body != undefined) {
     var modifica = false;
@@ -207,9 +208,7 @@ app.get('/API/mostra/:table', (req, res, next) => {
     });
   }
 })
-
-// -------------------------------------------------------------------------------------
-
+// AGGIUNGI
 app.post('/API/aggiungi/:table', (req, res) => {
   var q = `INSERT INTO ${req.params.table} (/col/) VALUES (/val/);`;
   var t = 0;
@@ -220,9 +219,7 @@ app.post('/API/aggiungi/:table', (req, res) => {
   db.query(q.replace('/col/', col).replace('/val/', val), (err, resu) => { if (err) throw err; });
   res.redirect('/API/mostra/' + req.params.table);
 });
-
-// -------------------------------------------------------------------------------------
-
+// MODIFICA
 app.get('/API/modifica/:table', (req, res, next) => {
   var q = `UPDATE ${req.params.table} SET `;
   var t = 0;
@@ -238,9 +235,7 @@ app.get('/API/modifica/:table', (req, res, next) => {
   db.query(q, (err, res) => {if (err) throw err;});
   res.redirect(`/API/mostra/${req.params.table}`);
 });
-
-// -------------------------------------------------------------------------------------
-
+// ELIMINA
 app.get('/API/elimina/:table', (req, res, next) => {
   var q = `DELETE FROM ${req.params.table} WHERE `;
   if (req.params.table == 'evento') {
@@ -254,4 +249,13 @@ app.get('/API/elimina/:table', (req, res, next) => {
   });
 });
 
+
+//                      JSON
+// ------------------------------------------------------------------------------------
+// MOSTRA
+app.get('/API/json/select/:table', (req, res, next) => {
+  var q = 'SELECT /colonne/ FROM /tabella/ /CONDIZIONI/';
+  console.log(req.query);
+
+});
 app.listen(3001, () => { console.log('server start on port 3001'); });
