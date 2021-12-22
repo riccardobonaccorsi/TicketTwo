@@ -238,7 +238,7 @@ app.post('/API/aggiungi/:table', (req, res) => {
   var t = 0;
   var col = '';
   var val = '';
-  if ((req.body.UID != undefined && req.body.UID != 0) || (req.body.EID != undefined && req.body.EID != 0)) {
+  if ((req.body.UID != undefined && req.body.UID != 0) || (req.body.EID != undefined && req.body.EID != 0) || req.params.table == "utente") {
     for (var nome in req.body) { col += `${nome}, `; val += `'${req.body[nome]}', `; t = 2; }
     if (t!=0) { val = val.substring(0, val.length-t); col = col.substring(0, col.length-t); }
     db.query(q.replace('/col/', col).replace('/val/', val), (err, resu) => { if (err) throw err; });
