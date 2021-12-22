@@ -252,10 +252,97 @@ app.get('/API/elimina/:table', (req, res, next) => {
 
 //                      JSON
 // ------------------------------------------------------------------------------------
-// MOSTRA
+// SELECT
 app.get('/API/json/select/:table', (req, res, next) => {
-  var q = 'SELECT /colonne/ FROM /tabella/ /CONDIZIONI/';
-  console.log(req.query);
-
+  var q = 'SELECT /colonne/ FROM /tabella/ /condizione/'.replace('/tabella/', req.params.table);
+  if (req.query.hasOwnProperty('colonne') && req.query.colonne != '') q = q.replace('/colonne/', req.query.colonne);
+  else q = q.replace('/colonne/', '*');
+  
+  if (req.query.hasOwnProperty('where') && req.query.where != '') q = q.replace('/condizione/', 'WHERE ' + req.query.where);
+  else q = q.replace('/condizione/', '');
+  
+  q += ';';
+  
+  db.query(q, (err, rows, fields) => {
+    if (err) res.send(err);
+    else res.send(rows);
+  });
 });
+// JOIN
+app.get('/API/json/join/:table/:table2', (req, res, next) => {
+  var q = 'SELECT /colonne/ FROM /tabella/ JOIN /tabella2/ ON /on/ /condizione/'.replace('/tabella/', req.params.table).replace('/tabella2/', req.params.table2);
+  if (req.params.table == 'evento')  q = q.replace('/on/', req.params.table2 + '.UID = ' + req.params.table + '.EID' )
+  else if (req.params.table2 == 'evento') q = q.replace('/on/', req.params.table + '.UID = ' + req.params.table2 + '.EID' )
+  else  q = q.replace('/on/', req.params.table + '.UID = ' + req.params.table2 + '.UID' )
+  
+  if (req.query.hasOwnProperty('colonne') && req.query.colonne != '') q = q.replace('/colonne/', req.query.colonne);
+  else q = q.replace('/colonne/', '*');
+  
+  if (req.query.hasOwnProperty('where') && req.query.where != '') q = q.replace('/condizione/', 'WHERE ' + req.query.where);
+  else q = q.replace('/condizione/', '');
+  
+  q += ';';
+  
+  db.query(q, (err, rows, fields) => {
+    if (err) res.send(err);
+    else res.send(rows);
+  });
+});
+// AGGIUNGI
+app.get('/API/json/aggiungi/:table', (req, res, next) => {
+  var q = 'INSERT INTO /tabella/ (/colonne/) VALUES ("/valori/)'.replace('/tabella/', req.params.table);
+  
+  var colonne = '';
+  var valori = '';
+  var t_c = 0;
+  var t_v = 1;
+  for (var nome in req.query) { colonne = colonne + nome + ', '; valori = valori + req.query[nome] + '" , "'; t_c = 2; t_v = 4; }
+  if (t_c != 0) { q = q.replace('/colonne/', colonne.substring(0, colonne.length-t_c)); }
+  if (t_c != 1) { q = q.replace('/valori/', valori.substring(0, valori.length-t_v)); }
+  
+  q += ';';
+  
+  db.query(q, (err, rows, fields) => {
+    if (err) res.send(err);
+    else res.send(rows);
+  });
+});
+// UPDATE
+app.get('/API/json/update/:table', (req, res, next) => {
+  var q = 'UPDATE /tabella/ SET /set/ WHERE /where/'.replace('/tabella/', req.params.table);
+  
+  var t = 0;
+  var set = '';
+  if (req.params.table == "evento") {
+    for (var nome in req.query) if (nome != 'EID') { set = set + `${nome} = "${req.query[nome]}" , `; t = 2 }
+    if (t != 0) { q = q.replace('/set/', set.substring(0, q.length-t)); }
+    q = q.replace('/where/', `EID = ${req.query['EID']}`);
+  } else {
+    for (var nome in req.query) if (nome != 'UID') { set = set + `${nome} = "${req.query[nome]}" , `; t = 2 }
+    if (t != 0) { q = q.replace('/set/', set.substring(0, set.length-t)); }
+    q = q.replace('/where/', `UID = ${req.query['UID']}`);
+  }
+  
+  q += ';';
+  
+  db.query(q.replace(new RegExp('\"', 'g'), '"'), (err, rows, fields) => {
+    if (err) res.send(err);
+    else res.send(rows);
+  });
+});
+// DELETE
+app.get('/API/json/delete/:table', (req, res, next) => {
+  var q = 'DELETE FROM /tabella/ WHERE /where/'.replace('/tabella/', req.params.table);
+  
+  if (req.params.table == "evento") q = q.replace('/where/', `EID = ${req.query['EID']}`);
+  else q = q.replace('/where/', `UID = ${req.query['UID']}`);
+  
+  q += ';';
+  
+  db.query(q.replace(new RegExp('\"', 'g'), '"'), (err, rows, fields) => {
+    if (err) res.send(err);
+    else res.send(rows);
+  });
+});
+
 app.listen(3001, () => { console.log('server start on port 3001'); });
