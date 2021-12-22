@@ -10,7 +10,7 @@ CREATE TABLE `utente` (
   `nome` varchar(25) NOT NULL,
   `psw` varchar(25) NOT NULL,
   `path_image_profile` varchar(255),
-  `is_gestore` boolean NOT NULL,
+  `is_gestore` boolean DEFAULT 1,
   PRIMARY KEY (`UID`)
 );
 INSERT INTO `utente` (nome, email, psw, is_gestore) VALUES ('Ricky', 'rickyb@gmail.com', 'Speck&Grana', 0),
