@@ -134,7 +134,7 @@ app.get('/eventi', (req, res) => {
                         filtri = filtri + '</select><br><br>';
                         filtri = filtri + '<label for="nome">Nome</label><br>';
                         filtri = filtri + '<input type="text" id="nome" name="nome"><br><br>';
-                        filtri = filtri + '<label for="email">E-mail</label><br>';
+                        filtri = filtri + '<label for="email">Prezzo min-max</label><br>';
                         q = 'SELECT MAX(prezzo) AS M, MIN(prezzo) AS m FROM evento';
                         db.query(q, (err, risultati) => {
                             filtri = filtri + `<input type="number" min="${risultati[0].m}" value="${risultati[0].m}" id="min" name="prezzo_min">`;
